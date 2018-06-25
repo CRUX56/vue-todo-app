@@ -1,0 +1,37 @@
+<template>
+    <div>
+        <p>Completed Tasks: {{todos.filter(todo => {return todo.done === true}).length}}</p>
+        <p>Pending Tasks: {{todos.filter(todo => {return todo.done === false}).length}}</p>
+        <!-- we are now passing the data to the todo component to render the todo list-->
+        <todo v-on:delete-todo="deleteTodo" v-on:complete-todo="completeTodo" v-for="todo in todos" :todo.sync="todo" v-bind:todo="todo"></todo>
+    </div>
+</template>
+
+
+<script type = "text/javascript">
+
+    import Todo from './Todo';
+
+    export default {
+        props: ['todos'],
+        components: {
+            Todo,
+        },
+        methods: {
+            deleteTodo(todo) {
+                const todoIndex = this.todo.indexOf(todo);
+                this.todo.splice(todoIndex, 1);
+            },
+            completeTodo(todo) {
+                const todoIndex = this.todos.indexOf(todo);
+                this.todos[todoIndex].done = true;
+            }
+        },
+    };
+</script>
+
+<style>
+
+</style>
+
+
